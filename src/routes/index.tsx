@@ -1,18 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import {
-  Heart,
-  Gift,
-  Camera,
-  MessageCircleHeart,
-  Sparkles,
-  Lock,
-  Unlock,
-  ChevronRight,
-  RotateCcw,
-  Music,
-  Cake,
-} from "lucide-react";
+import { Heart, Gift, Camera, MessageCircleHeart, Sparkles, Lock, Clock as Unlock, ChevronRight, RotateCcw, Music, Cake } from "lucide-react";
 
 import heroImage from "../assets/hero-birthday.jpg";
 import memory1 from "../assets/memory-1.jpg";
@@ -62,10 +50,15 @@ const reasons = [
 
 const quizQuestions = [
   {
-    question: "Where did we first meet?",
-    options: ["At a coffee shop", "Through friends", "Online", "At a party"],
-    answer: 0,
-    note: "That little café will always be magic to me.",
+    question: "How you felt for the first time after seeing me?",
+    options: [
+      "My heart skipped a beat",
+      "Butterflies everywhere",
+      "Like I'd known you forever",
+      "All of the above",
+    ],
+    answer: 3,
+    note: "From that very first glance, you were already my whole world.",
   },
   {
     question: "What is my favorite thing about you?",
