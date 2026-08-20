@@ -233,6 +233,9 @@ function BirthdayPage() {
                   <img
                     src={memory.src}
                     alt={memory.caption}
+                    width={1024}
+                    height={1024}
+                    loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 flex items-end bg-gradient-to-t from-blossom-900/70 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -311,8 +314,9 @@ function BirthdayPage() {
             {!giftOpen ? (
               <div className="mt-4 text-center">
                 <button
+                  aria-label="Unwrap gift"
                   onClick={() => setGiftOpen(true)}
-                  className="gift-pulse mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-105"
+                  className="gift-pulse mx-auto flex h-20 w-20 cursor-pointer items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-105"
                 >
                   <Lock className="h-8 w-8" />
                 </button>
