@@ -247,15 +247,15 @@ function BirthdayPage() {
               <Sparkles className="h-5 w-5" />
             </div>
             <h2 className="text-2xl font-medium text-foreground">Love quiz</h2>
-            {!quizDone ? (
+            {!quizDone && currentQuestion ? (
               <div className="mt-4">
                 <p className="mb-3 text-sm font-medium text-foreground">
-                  {quizQuestions[quizStep].question}
+                  {currentQuestion.question}
                 </p>
                 <div className="space-y-2">
-                  {quizQuestions[quizStep].options.map((option, idx) => {
+                  {currentQuestion.options.map((option, idx) => {
                     const isSelected = selectedOption === idx;
-                    const isCorrect = idx === quizQuestions[quizStep].answer;
+                    const isCorrect = idx === currentQuestion.answer;
                     const showResult = selectedOption !== null;
                     return (
                       <button
@@ -277,7 +277,7 @@ function BirthdayPage() {
                 </div>
                 {selectedOption !== null && (
                   <p className="mt-3 text-xs text-muted-foreground">
-                    {quizQuestions[quizStep].note}
+                    {currentQuestion.note}
                   </p>
                 )}
               </div>
