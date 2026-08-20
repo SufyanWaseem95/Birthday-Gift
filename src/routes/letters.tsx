@@ -52,12 +52,14 @@ const letters = [
     ],
   },
   {
-    title: "Open on our anniversary",
-    preview: "Every year, all over again",
+    title: "Open when you're Angryy",
+    preview: "For when you need to cool down",
     body: [
-      "To my favorite chapter,",
-      "I'd choose you again — in every version of this life, in every crowded room, in every quiet morning.",
-      "Thank you for saying yes, and for saying it again every single day.",
+      "Hey my little firecracker,",
+      "First of all, whatever made you mad — I'm on your side. Always. Even if it's me who made you mad, I'm still on your side.",
+      "Take a deep breath. Now another one. You're too pretty to be frowning, you know that?",
+      "I love you even when you're angry. Especially when you're angry. You get this cute little face and I just want to hug you forever.",
+      "Now come here. Let me hold you until the storm passes. I've got you, always.",
     ],
   },
 ];

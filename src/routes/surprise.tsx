@@ -88,12 +88,30 @@ function SurprisePage() {
           <div className="scale-in-soft">
             <Sparkles className="mx-auto h-10 w-10 text-gold" />
             <h2 className="mt-4 text-3xl font-medium text-foreground md:text-4xl">
-              A whole day that's only yours
+              A little box of love, just for you
             </h2>
-            <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
-              Breakfast in bed, your favorite playlist, a long walk, zero chores, and all of my
-              attention — plus one real gift waiting for you later today.
-            </p>
+            <div className="mx-auto mt-4 max-w-lg space-y-4">
+              <p className="text-lg italic text-foreground">
+                "In a world full of temporary things, you are a perpetual feeling."
+              </p>
+              <div className="rounded-2xl bg-blossom-100/70 p-4">
+                <p className="text-sm font-medium text-foreground">
+                  You are the poem I never knew how to write, the song I never knew how to sing, and
+                  the love I never knew I deserved.
+                </p>
+              </div>
+              <div className="rounded-2xl bg-primary/10 p-4">
+                <p className="text-sm font-medium text-primary">
+                  If I had to choose between loving you and breathing, I'd use my last breath to say
+                  I love you.
+                </p>
+              </div>
+              <p className="text-base text-muted-foreground">
+                You're my favorite person to annoy, and my absolute favorite to love. Happy birthday,
+                my pretty little girl. Every day with you feels like a gift I never want to stop
+                unwrapping.
+              </p>
+            </div>
             <button
               onClick={() => setOpened(false)}
               className="mt-6 cursor-pointer rounded-full bg-blossom-100 px-4 py-2 text-xs font-semibold text-blossom-700 hover:bg-blossom-200"

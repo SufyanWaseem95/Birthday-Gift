@@ -1,12 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef } from "react";
-import { Images, Upload, Trash2, Heart } from "lucide-react";
+import { Images, Upload, Trash2, Heart, Camera } from "lucide-react";
 
 import { useMediaStore } from "@/lib/media-store";
-import memory1 from "@/assets/memory-1.jpg";
-import memory2 from "@/assets/memory-2.jpg";
-import memory3 from "@/assets/memory-3.jpg";
-import memory4 from "@/assets/memory-4.jpg";
 
 export const Route = createFileRoute("/memories")({
   component: MemoriesPage,
@@ -27,13 +23,6 @@ export const Route = createFileRoute("/memories")({
     ],
   }),
 });
-
-const starters = [
-  { src: memory1, caption: "The day everything changed" },
-  { src: memory2, caption: "Cozy mornings" },
-  { src: memory3, caption: "Adventures with you" },
-  { src: memory4, caption: "Dancing through life" },
-];
 
 function MemoriesPage() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -111,26 +100,39 @@ function MemoriesPage() {
         </section>
       )}
 
-      <section className="mt-14">
+      {items.length === 0 && (
+        <section className="mt-12">
+          <div
+            onClick={() => inputRef.current?.click()}
+            className="flex min-h-[300px] cursor-pointer flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed border-blossom-200 bg-blossom-50/30 transition-colors hover:bg-blossom-50"
+          >
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blossom-100 text-primary">
+              <Camera className="h-8 w-8" />
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-medium text-foreground">
+                Upload our favorite moments here
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Photos and videos you add will be saved in this browser.
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
+              <Upload className="h-4 w-4" />
+              Choose files
+            </span>
+          </div>
+        </section>
+      )}
+
+      <section className="mt-14 text-center">
         <h2 className="flex items-center justify-center gap-2 text-2xl font-medium text-foreground">
           <Heart className="h-5 w-5 fill-primary text-primary" />
-          A few from me
+          Every moment with you is a treasure
         </h2>
-        <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
-          {starters.map((memory, idx) => (
-            <div key={idx} className="group relative aspect-square overflow-hidden rounded-2xl">
-              <img
-                src={memory.src}
-                alt={memory.caption}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 flex items-end bg-gradient-to-t from-blossom-900/70 to-transparent p-3 opacity-0 transition-opacity group-hover:opacity-100">
-                <p className="text-sm font-medium text-blossom-50">{memory.caption}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
+          Upload our special moments above and they'll be right here whenever you want to look back.
+        </p>
       </section>
     </main>
   );
