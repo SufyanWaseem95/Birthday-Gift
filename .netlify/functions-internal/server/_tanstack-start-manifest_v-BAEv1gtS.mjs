@@ -1,7 +1,7 @@
-//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-BBgRQwOQ.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-BAEv1gtS.js
 var tsrStartManifest = () => ({ routes: {
 	__root__: {
-		filePath: "/tmp/cc-agent/70155968/project/src/routes/__root.tsx",
+		filePath: "/home/project/src/routes/__root.tsx",
 		children: [
 			"/",
 			"/game",
@@ -17,7 +17,7 @@ var tsrStartManifest = () => ({ routes: {
 		} }]
 	},
 	"/": {
-		filePath: "/tmp/cc-agent/70155968/project/src/routes/index.tsx",
+		filePath: "/home/project/src/routes/index.tsx",
 		children: void 0,
 		preloads: [
 			"/assets/routes-Ok8cDwfL.js",
@@ -27,17 +27,17 @@ var tsrStartManifest = () => ({ routes: {
 		]
 	},
 	"/game": {
-		filePath: "/tmp/cc-agent/70155968/project/src/routes/game.tsx",
+		filePath: "/home/project/src/routes/game.tsx",
 		children: void 0,
 		preloads: ["/assets/game-BzzWneJs.js", "/assets/rotate-ccw-nwbxEsZC.js"]
 	},
 	"/letters": {
-		filePath: "/tmp/cc-agent/70155968/project/src/routes/letters.tsx",
+		filePath: "/home/project/src/routes/letters.tsx",
 		children: void 0,
 		preloads: ["/assets/letters-CCf-Vegr.js"]
 	},
 	"/memories": {
-		filePath: "/tmp/cc-agent/70155968/project/src/routes/memories.tsx",
+		filePath: "/home/project/src/routes/memories.tsx",
 		children: void 0,
 		preloads: [
 			"/assets/memories-jNSSqf9b.js",
@@ -47,7 +47,7 @@ var tsrStartManifest = () => ({ routes: {
 		]
 	},
 	"/surprise": {
-		filePath: "/tmp/cc-agent/70155968/project/src/routes/surprise.tsx",
+		filePath: "/home/project/src/routes/surprise.tsx",
 		children: void 0,
 		preloads: [
 			"/assets/surprise-DrcpIUeO.js",
