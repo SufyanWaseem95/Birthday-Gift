@@ -1,5 +1,5 @@
 // 👇 CHANGE YOUR SPECIAL PASSCODE HERE (case-insensitive)
-export const SPECIAL_PASSCODE = "loveyou";
+export const SPECIAL_PASSCODE = "ilyinno";
 
 export const PASSCODE_STORAGE_KEY = "birthday-unlocked";
 
