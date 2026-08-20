@@ -97,10 +97,12 @@ function BirthdayPage() {
     return () => clearInterval(interval);
   }, []);
 
+  const currentQuestion = quizQuestions[quizStep];
+
   const handleQuizAnswer = (index: number) => {
-    if (selectedOption !== null) return;
+    if (selectedOption !== null || !currentQuestion) return;
     setSelectedOption(index);
-    if (index === quizQuestions[quizStep].answer) {
+    if (index === currentQuestion.answer) {
       setQuizScore((s) => s + 1);
     }
     setTimeout(() => {
