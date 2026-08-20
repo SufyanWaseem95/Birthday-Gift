@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Heart, Gift, Camera, MessageCircleHeart, Sparkles, Lock, Clock as Unlock, ChevronRight, RotateCcw, Music, Cake } from "lucide-react";
+import { Heart, Gift, Camera, MessageCircleHeart, Sparkles, Lock, Unlock, ChevronRight, RotateCcw, Cake } from "lucide-react";
 
 import heroImage from "../assets/hero-birthday.jpg";
 import memory1 from "../assets/memory-1.jpg";
@@ -72,6 +72,48 @@ const quizQuestions = [
     answer: 3,
     note: "Every moment with you feels like all the good things at once.",
   },
+  {
+    question: "What do I think about before falling asleep?",
+    options: ["Work stuff", "You, always you", "What to eat tomorrow", "Nothing — I'm out cold"],
+    answer: 1,
+    note: "You're my last thought every night and my first every morning.",
+  },
+  {
+    question: "What's my favorite way to spend time with you?",
+    options: ["Fancy dinners out", "Cozy nights in", "Adventures together", "Anywhere, as long as it's with you"],
+    answer: 3,
+    note: "Wherever you are is my favorite place to be.",
+  },
+  {
+    question: "What makes my day instantly better?",
+    options: ["A good cup of coffee", "Seeing you smile", "A surprise hug from you", "Both B and C"],
+    answer: 3,
+    note: "Your smile and your hugs are my daily dose of happiness.",
+  },
+  {
+    question: "How much do I love you?",
+    options: ["A lot", "More than words can say", "To the moon and back", "Infinity and beyond"],
+    answer: 3,
+    note: "Even infinity feels too small a word for what I feel for you.",
+  },
+  {
+    question: "What's my favorite sound in the world?",
+    options: ["Rain on the window", "Your laugh", "Your voice saying my name", "Both B and C"],
+    answer: 3,
+    note: "Your laugh is music, and my name sounds best in your voice.",
+  },
+  {
+    question: "What do I want most for your birthday?",
+    options: ["To spoil you rotten", "To see you happy all day", "To hold you close", "All of the above"],
+    answer: 3,
+    note: "Your happiness is the only gift I ever need.",
+  },
+  {
+    question: "What are you to me?",
+    options: ["My wife", "My best friend", "My home", "All of the above and so much more"],
+    answer: 3,
+    note: "You are everything I never knew I always wanted.",
+  },
 ];
 
 function BirthdayPage() {
@@ -81,6 +123,7 @@ function BirthdayPage() {
   const [quizDone, setQuizDone] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [currentReason, setCurrentReason] = useState(0);
+  const [lovePercent, setLovePercent] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -96,6 +139,7 @@ function BirthdayPage() {
     setSelectedOption(index);
     if (index === currentQuestion.answer) {
       setQuizScore((s) => s + 1);
+      setLovePercent((p) => Math.min(100, p + 100 / quizQuestions.length));
     }
     setTimeout(() => {
       if (quizStep < quizQuestions.length - 1) {
@@ -104,7 +148,7 @@ function BirthdayPage() {
       } else {
         setQuizDone(true);
       }
-    }, 1500);
+    }, 1800);
   };
 
   const resetQuiz = () => {
@@ -112,6 +156,7 @@ function BirthdayPage() {
     setQuizScore(0);
     setQuizDone(false);
     setSelectedOption(null);
+    setLovePercent(0);
   };
 
   return (
@@ -245,63 +290,23 @@ function BirthdayPage() {
             </div>
           </BentoCard>
 
-          {/* Interactive quiz */}
+          {/* Interactive quiz teaser */}
           <BentoCard className="lg:col-span-1 lg:row-span-1 bg-gradient-to-br from-card to-blossom-50">
             <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blossom-100 text-primary">
               <Sparkles className="h-5 w-5" />
             </div>
             <h2 className="text-2xl font-medium text-foreground">Love quiz</h2>
-            {!quizDone && currentQuestion ? (
-              <div className="mt-4">
-                <p className="mb-3 text-sm font-medium text-foreground">
-                  {currentQuestion.question}
-                </p>
-                <div className="space-y-2">
-                  {currentQuestion.options.map((option, idx) => {
-                    const isSelected = selectedOption === idx;
-                    const isCorrect = idx === currentQuestion.answer;
-                    const showResult = selectedOption !== null;
-                    return (
-                      <button
-                        key={idx}
-                        disabled={showResult}
-                        onClick={() => handleQuizAnswer(idx)}
-                        className={`w-full rounded-xl px-3 py-2 text-left text-sm transition-all ${
-                          showResult && isCorrect
-                            ? "bg-green-100 text-green-800"
-                            : showResult && isSelected
-                              ? "bg-destructive/10 text-destructive"
-                              : "bg-blossom-100/50 text-foreground hover:bg-blossom-100"
-                        }`}
-                      >
-                        {option}
-                      </button>
-                    );
-                  })}
-                </div>
-                {selectedOption !== null && (
-                  <p className="mt-3 text-xs text-muted-foreground">
-                    {currentQuestion.note}
-                  </p>
-                )}
-              </div>
-            ) : (
-              <div className="mt-4 text-center">
-                <p className="text-3xl font-medium text-primary">{quizScore}/{quizQuestions.length}</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {quizScore === quizQuestions.length
-                    ? "You know me perfectly. Just like I know you're perfect for me."
-                    : "You know my heart, and that's all that matters."}
-                </p>
-                <button
-                  onClick={resetQuiz}
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-blossom-100 px-3 py-1.5 text-xs font-semibold text-blossom-700 hover:bg-blossom-200"
-                >
-                  <RotateCcw className="h-3 w-3" />
-                  Play again
-                </button>
-              </div>
-            )}
+            <p className="mt-2 text-sm text-muted-foreground">
+              {quizQuestions.length} little questions about us. Each right answer fills our love
+              meter a little more.
+            </p>
+            <a
+              href="#love-quiz"
+              className="mt-4 inline-flex items-center gap-2 self-start rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-transform hover:scale-105"
+            >
+              Take the quiz
+              <ChevronRight className="h-3.5 w-3.5" />
+            </a>
           </BentoCard>
 
           {/* Gift reveal */}
@@ -359,6 +364,126 @@ function BirthdayPage() {
               </div>
             </div>
           </BentoCard>
+        </div>
+      </section>
+
+      {/* Love quiz with love meter */}
+      <section id="love-quiz" className="relative z-10 mx-auto max-w-5xl px-4 pb-20 md:px-6">
+        <div className="rounded-3xl border border-border bg-gradient-to-br from-blossom-50 via-card to-blossom-100 p-6 shadow-sm md:p-10">
+          <header className="text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-blossom-100 text-primary">
+              <Heart className="h-7 w-7 fill-primary" />
+            </div>
+            <h2 className="text-4xl font-medium text-foreground md:text-5xl">Our Love Quiz</h2>
+            <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
+              Answer {quizQuestions.length} little questions and watch our love meter rise with every
+              answer you get right.
+            </p>
+          </header>
+
+          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-[1fr_auto]">
+            {/* Quiz area */}
+            <div className="order-2 md:order-1">
+              {!quizDone && currentQuestion ? (
+                <div key={quizStep} className="pop-in">
+                  <div className="mb-4 flex items-center justify-between">
+                    <span className="rounded-full bg-blossom-100 px-3 py-1 text-xs font-semibold text-blossom-700">
+                      Question {quizStep + 1} of {quizQuestions.length}
+                    </span>
+                    <span className="text-xs font-medium text-muted-foreground">
+                      Score: {quizScore}/{quizQuestions.length}
+                    </span>
+                  </div>
+                  <p className="mb-4 text-lg font-medium text-foreground">
+                    {currentQuestion.question}
+                  </p>
+                  <div className="space-y-2.5">
+                    {currentQuestion.options.map((option, idx) => {
+                      const isSelected = selectedOption === idx;
+                      const isCorrect = idx === currentQuestion.answer;
+                      const showResult = selectedOption !== null;
+                      return (
+                        <button
+                          key={idx}
+                          disabled={showResult}
+                          onClick={() => handleQuizAnswer(idx)}
+                          className={`w-full rounded-2xl px-4 py-3 text-left text-sm transition-all ${
+                            showResult && isCorrect
+                              ? "bg-green-100 text-green-800"
+                              : showResult && isSelected
+                                ? "bg-destructive/10 text-destructive"
+                                : "bg-card/70 text-foreground hover:bg-blossom-100 hover:scale-[1.02]"
+                          }`}
+                        >
+                          {option}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {selectedOption !== null && (
+                    <p className="mt-4 rounded-2xl bg-blossom-100/60 p-4 text-sm italic text-foreground">
+                      {currentQuestion.note}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="pop-in text-center">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg">
+                    <Heart className="h-8 w-8 fill-primary-foreground" />
+                  </div>
+                  <h3 className="text-3xl font-medium text-foreground">
+                    {quizScore}/{quizQuestions.length} correct!
+                  </h3>
+                  <p className="mx-auto mt-2 max-w-md text-muted-foreground">
+                    {quizScore === quizQuestions.length
+                      ? "You know me perfectly. Just like I know you're perfect for me. Happy birthday, my love."
+                      : "You know my heart, and that's all that matters. Every answer is a little piece of us."}
+                  </p>
+                  <button
+                    onClick={resetQuiz}
+                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    Play again
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Love meter */}
+            <div className="order-1 flex flex-col items-center md:order-2">
+              <span className="mb-2 text-xs font-semibold tracking-widest text-blossom-700 uppercase">
+                Love Meter
+              </span>
+              <div className="relative h-72 w-10 overflow-hidden rounded-full border-2 border-blossom-200 bg-blossom-50">
+                <div
+                  className="absolute bottom-0 left-0 w-full origin-bottom rounded-full bg-gradient-to-t from-blossom-400 via-blossom-500 to-primary transition-transform duration-700 ease-out"
+                    style={{
+                      transform: `scaleY(${lovePercent / 100})`,
+                    }}
+                  />
+                  {/* Tick marks */}
+                  {[20, 40, 60, 80].map((tick) => (
+                    <div
+                      key={tick}
+                      className="absolute left-0 w-full border-t border-blossom-200/60"
+                      style={{ bottom: `${tick}%` }}
+                    />
+                  ))}
+                </div>
+                <div className="relative mt-3">
+                  <Heart
+                    className={`h-8 w-8 fill-primary text-primary ${quizDone ? "animate-[meter-pulse_1.2s_ease-in-out_infinite]" : ""}`}
+                  />
+                  {quizDone && lovePercent === 100 && (
+                    <Heart className="heart-burst absolute inset-0 h-8 w-8 fill-primary text-primary" />
+                  )}
+                </div>
+                <span className="mt-2 text-2xl font-bold text-primary">
+                  {Math.round(lovePercent)}%
+                </span>
+            </div>
+          </div>
         </div>
       </section>
 
