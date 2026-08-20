@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import {
   Heart,
@@ -82,7 +82,6 @@ const quizQuestions = [
 ];
 
 function BirthdayPage() {
-  const [showLetter, setShowLetter] = useState(false);
   const [giftOpen, setGiftOpen] = useState(false);
   const [quizStep, setQuizStep] = useState(0);
   const [quizScore, setQuizScore] = useState(0);
@@ -164,13 +163,13 @@ function BirthdayPage() {
             Open your surprises
             <ChevronRight className="h-4 w-4" />
           </a>
-          <button
-            onClick={() => setShowLetter(true)}
+          <Link
+            to="/letters"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-card-foreground transition-colors hover:bg-blossom-50"
           >
             <MessageCircleHeart className="h-4 w-4 text-primary" />
-            Read my letter
-          </button>
+            Read my letters
+          </Link>
         </div>
       </section>
 
@@ -205,13 +204,13 @@ function BirthdayPage() {
                 </p>
                 <p className="mt-4 font-body font-medium text-foreground">Forever yours,</p>
               </div>
-              <button
-                onClick={() => setShowLetter(true)}
+              <Link
+                to="/letters"
                 className="mt-5 inline-flex items-center gap-2 self-start rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105"
               >
-                Read the full letter
+                Open all my letters
                 <ChevronRight className="h-4 w-4" />
-              </button>
+              </Link>
             </div>
           </BentoCard>
 
@@ -224,6 +223,13 @@ function BirthdayPage() {
             <p className="mt-2 text-muted-foreground">
               A few moments that make my heart feel full.
             </p>
+            <Link
+              to="/memories"
+              className="mt-4 inline-flex items-center gap-2 self-start rounded-full bg-blossom-100 px-4 py-2 text-xs font-semibold text-blossom-700 hover:bg-blossom-200"
+            >
+              Open the full gallery
+              <ChevronRight className="h-3.5 w-3.5" />
+            </Link>
             <div className="mt-6 grid grid-cols-2 gap-3">
               {memories.map((memory, idx) => (
                 <div
@@ -373,52 +379,6 @@ function BirthdayPage() {
         </p>
       </footer>
 
-      {/* Full letter modal */}
-      {showLetter && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-blossom-900/40 p-4 backdrop-blur-sm"
-          onClick={() => setShowLetter(false)}
-        >
-          <div
-            className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-card p-8 shadow-2xl md:p-12"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setShowLetter(false)}
-              className="absolute top-4 right-4 rounded-full p-2 text-muted-foreground hover:bg-blossom-100 hover:text-foreground"
-              aria-label="Close letter"
-            >
-              ✕
-            </button>
-            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-blossom-100 text-primary">
-              <MessageCircleHeart className="h-7 w-7" />
-            </div>
-            <h2 className="text-4xl font-medium text-foreground md:text-5xl">To my forever person,</h2>
-            <div className="mt-6 space-y-4 font-body text-lg leading-relaxed text-muted-foreground">
-              <p>My beautiful wife,</p>
-              <p>
-                I could write you a thousand letters and still not find the right words to describe
-                how much you mean to me. You are the first thought on my mind in the morning and the
-                last one before I sleep. You are my home, my calm, my favorite adventure.
-              </p>
-              <p>
-                Today, I celebrate not just your birthday, but every little thing that makes you
-                you — your kindness, your strength, your laughter, the way you make even the hardest
-                days feel lighter.
-              </p>
-              <p>
-                I am so grateful to walk through life with you. Here's to many more birthdays,
-                adventures, quiet Sundays, and late-night talks.
-              </p>
-              <p className="font-medium text-foreground">Happy birthday, my love. Forever and always.</p>
-            </div>
-            <div className="mt-8 flex items-center gap-3 text-primary">
-              <Music className="h-5 w-5" />
-              <span className="text-sm font-medium">This page is playing our song in my heart.</span>
-            </div>
-          </div>
-        </div>
-      )}
     </main>
   );
 }
