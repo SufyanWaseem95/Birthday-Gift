@@ -165,3 +165,56 @@
 @utility gift-pulse {
   animation: pulse-soft 2s ease-in-out infinite;
 }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+@keyframes petal-fall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+  20% { opacity: 0.6; }
+  100% { transform: translateY(80vh) rotate(220deg); opacity: 0; }
+}
+
+@utility petal-fall {
+  animation: petal-fall 14s linear infinite;
+}
+
+@keyframes letter-line-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@utility letter-line {
+  opacity: 0;
+  animation: letter-line-in 0.7s ease-out forwards;
+}
+
+@keyframes letter-open-in {
+  from { opacity: 0; transform: scale(0.94) rotateX(8deg); }
+  to { opacity: 1; transform: scale(1) rotateX(0deg); }
+}
+
+@utility letter-open {
+  animation: letter-open-in 0.5s ease-out;
+}
+
+@keyframes scale-in-soft {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@utility scale-in-soft {
+  animation: scale-in-soft 0.35s ease-out;
+}
+
+@utility envelope-card {
+  &:hover .wax-seal {
+    transform: scale(1.15) rotate(-10deg);
+  }
+  & .wax-seal {
+    transition: transform 0.4s ease;
+  }
+}

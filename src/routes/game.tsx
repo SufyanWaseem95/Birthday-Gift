@@ -49,17 +49,17 @@ function GamePage() {
   useEffect(() => setCards(shuffle()), []);
 
   useEffect(() => {
-    if (flipped.length !== 2) return;
+    if (flipped.length !== 2) return undefined;
     const [a, b] = flipped.map((id) => cards.find((c) => c.id === id)!);
     setMoves((m) => m + 1);
     if (a && b && a.emoji === b.emoji) {
       setMatched((prev) => [...prev, a.emoji]);
       setNote(a.note);
       setFlipped([]);
-    } else {
-      const t = setTimeout(() => setFlipped([]), 900);
-      return () => clearTimeout(t);
+      return undefined;
     }
+    const t = setTimeout(() => setFlipped([]), 900);
+    return () => clearTimeout(t);
   }, [flipped, cards]);
 
   const reset = () => {
