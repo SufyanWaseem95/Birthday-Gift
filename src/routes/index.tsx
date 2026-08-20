@@ -140,6 +140,8 @@ function BirthdayPage() {
           <img
             src={heroImage}
             alt="Happy birthday celebration"
+            width={1024}
+            height={1024}
             className="h-full w-full object-cover"
           />
         </div>
