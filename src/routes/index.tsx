@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Heart, Gift, Camera, MessageCircleHeart, Sparkles, Lock, Clock as Unlock, ChevronRight, RotateCcw, Cake, Upload, Target } from "lucide-react";
+import { Heart, Gift, Camera, MessageCircleHeart, Sparkles, Lock, Clock as Unlock, ChevronRight, RotateCcw, Cake, Upload, Target, Circle as HelpCircle } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: BirthdayPage,
@@ -391,10 +391,10 @@ function BirthdayPage() {
                 Upload our photos
               </button>
               <Link
-                to="/memories"
+                to="/questions"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90"
               >
-                Open the full gallery
+                Questions for us
                 <ChevronRight className="h-3.5 w-3.5" />
               </Link>
             </div>

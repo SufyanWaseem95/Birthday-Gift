@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Heart, Circle as HelpCircle, RotateCcw, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/questions")({
@@ -94,6 +94,48 @@ const questions = [
     yesMsg: "You're the best thing that ever happened to me too. Happy birthday, my love.",
     noEmoji: "🤷",
     noMsg: "Well, you're definitely the best thing that happened to ME.",
+  },
+  {
+    text: "Do you still get butterflies when I look at you?",
+    yesEmoji: "🦋",
+    yesMsg: "Every single glance, my love. Every single one.",
+    noEmoji: "🪵",
+    noMsg: "Must be nice being so calm. Meanwhile I'm a mess around you.",
+  },
+  {
+    text: "Is my voice your favorite sound?",
+    yesEmoji: "🎙️",
+    yesMsg: "Your voice saying my name is my favorite melody too.",
+    noEmoji: "🔇",
+    noMsg: "Rude! I'll just keep talking until it becomes your favorite.",
+  },
+  {
+    text: "Do you feel safe when you're in my arms?",
+    yesEmoji: "🫂",
+    yesMsg: "You're the safest place I've ever known, right here in yours.",
+    noEmoji: "🛡️",
+    noMsg: "I'll just have to hold you tighter until you do.",
+  },
+  {
+    text: "Would you travel to the ends of the earth with me?",
+    yesEmoji: "🌍",
+    yesMsg: "To the ends of the earth and beyond, hand in hand.",
+    noEmoji: "✈️",
+    noMsg: "Fine, I'll carry you. We're going whether you like it or not!",
+  },
+  {
+    text: "Am I the first person you want to share good news with?",
+    yesEmoji: "📞",
+    yesMsg: "You're always my first call too. Always.",
+    noEmoji: "📭",
+    noMsg: "I see how it is. I'll just be here, waiting patiently... not.",
+  },
+  {
+    text: "Do you believe we're soulmates?",
+    yesEmoji: "💞",
+    yesMsg: "Two halves of the same soul, finally together. I believe it too.",
+    noEmoji: "🤞",
+    noMsg: "Believe it or not, we are. The universe just knows.",
   },
 ];
 
@@ -221,7 +263,7 @@ function QuestionsPage() {
         </p>
       </header>
 
-      <div className="mt-8 flex items-center justify-center gap-2">
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
         {questions.map((_, i) => (
           <div
             key={i}
