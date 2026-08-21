@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useCallback } from "react";
-import { Heart, HelpCircle, RotateCcw, Sparkles } from "lucide-react";
+import { Heart, Circle as HelpCircle, RotateCcw, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/questions")({
   component: QuestionsPage,
