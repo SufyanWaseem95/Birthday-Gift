@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Heart, Gift, HelpCircle, MessageCircleHeart, Sparkles, Lock, Clock as Unlock, ChevronRight, RotateCcw, Cake, Target } from "lucide-react";
+import { Heart, Gift, Camera, MessageCircleHeart, Sparkles, Lock, Clock as Unlock, ChevronRight, RotateCcw, Cake, Upload, Target } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: BirthdayPage,
@@ -10,13 +10,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "A little birthday surprise filled with love letters, questions, quizzes, and gifts.",
+          "A little birthday surprise filled with love letters, memories, quizzes, and gifts.",
       },
       { property: "og:title", content: "Happy Birthday, My Pretty Little Girl" },
       {
         property: "og:description",
         content:
-          "A little birthday surprise filled with love letters, questions, quizzes, and gifts.",
+          "A little birthday surprise filled with love letters, memories, quizzes, and gifts.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -131,9 +131,6 @@ const heartCompliments = [
   "My heart is yours, completely.",
 ];
 
-const birthdayImage =
-  "https://images.pexels.com/photos/5691261/pexels-photo-5691261.jpeg?auto=compress&cs=tinysrgb&h=650&w=940";
-
 type FloatingHeart = {
   id: number;
   left: number;
@@ -193,6 +190,76 @@ function BirthdayPage() {
     setLovePercent(0);
   };
 
+  // --- Hero photo upload ---
+  const heroInputRef = useRef<HTMLInputElement>(null);
+  const [heroPhoto, setHeroPhoto] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem("hero-photo");
+      if (saved) setHeroPhoto(saved);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const handleHeroUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const url = String(reader.result);
+      setHeroPhoto(url);
+      try {
+        window.localStorage.setItem("hero-photo", url);
+      } catch {
+        /* ignore */
+      }
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  // --- Home memory photos upload ---
+  const memoryInputRef = useRef<HTMLInputElement>(null);
+  const [homeMemories, setHomeMemories] = useState<
+    { dataUrl: string; caption: string }[]
+  >([]);
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem("home-memories");
+      if (raw) setHomeMemories(JSON.parse(raw) as { dataUrl: string; caption: string }[]);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const handleMemoryUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    const incoming: { dataUrl: string; caption: string }[] = [];
+    let pending = files.length;
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        incoming.push({ dataUrl: String(reader.result), caption: "" });
+        pending--;
+        if (pending === 0) {
+          const next = [...homeMemories, ...incoming].slice(0, 4);
+          setHomeMemories(next);
+          try {
+            window.localStorage.setItem("home-memories", JSON.stringify(next));
+          } catch {
+            /* ignore */
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+    e.target.value = "";
+  };
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* Floating decorative hearts */}
@@ -207,13 +274,27 @@ function BirthdayPage() {
 
       {/* Hero */}
       <section className="relative z-10 flex flex-col items-center justify-center px-6 pt-16 pb-12 text-center md:pt-24 md:pb-16">
-        <div className="group relative mb-8 flex h-48 w-48 cursor-pointer items-center justify-center overflow-hidden rounded-full border-4 border-blossom-200 shadow-xl transition-transform hover:scale-105 md:h-64 md:w-64">
-          <img
-            src={birthdayImage}
-            alt="Happy Birthday"
-            className="h-full w-full object-cover"
-          />
-        </div>
+        <input
+          ref={heroInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleHeroUpload}
+        />
+        <button
+          onClick={() => heroInputRef.current?.click()}
+          className="group relative mb-8 flex h-48 w-48 cursor-pointer items-center justify-center overflow-hidden rounded-full border-4 border-blossom-200 shadow-xl transition-transform hover:scale-105 md:h-64 md:w-64"
+          aria-label="Upload your photo"
+        >
+          {heroPhoto ? (
+            <img src={heroPhoto} alt="Your photo" className="h-full w-full object-cover" />
+          ) : (
+            <div className="flex flex-col items-center gap-2 text-blossom-400">
+              <Upload className="h-8 w-8" />
+              <span className="text-xs font-medium text-blossom-500">Add your photo</span>
+            </div>
+          )}
+        </button>
         <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-blossom-100 px-4 py-1.5 text-sm font-medium text-blossom-700">
           <Cake className="h-4 w-4" />
           Today is all about you
@@ -284,38 +365,63 @@ function BirthdayPage() {
             </div>
           </BentoCard>
 
-          {/* Yes / No questions teaser */}
+          {/* Memory gallery */}
           <BentoCard className="lg:col-span-2 lg:row-span-2 bg-card">
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blossom-100 text-primary">
-              <HelpCircle className="h-6 w-6" />
+              <Camera className="h-6 w-6" />
             </div>
-            <h2 className="text-3xl font-medium text-foreground">Questions for us</h2>
+            <h2 className="text-3xl font-medium text-foreground">Our memories</h2>
             <p className="mt-2 text-muted-foreground">
-              A few little yes-or-no questions about you and me. Answer them and watch the hearts fly.
+              A few moments that make my heart feel full.
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-3">
+              <input
+                ref={memoryInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={handleMemoryUpload}
+              />
+              <button
+                onClick={() => memoryInputRef.current?.click()}
+                className="inline-flex items-center gap-2 rounded-full bg-blossom-100 px-4 py-2 text-xs font-semibold text-blossom-700 hover:bg-blossom-200"
+              >
+                <Upload className="h-3.5 w-3.5" />
+                Upload our photos
+              </button>
               <Link
-                to="/questions"
+                to="/memories"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90"
               >
-                Answer our questions
+                Open the full gallery
                 <ChevronRight className="h-3.5 w-3.5" />
               </Link>
             </div>
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              {[
-                { emoji: "💍", label: "Forever?" },
-                { emoji: "💕", label: "Always?" },
-                { emoji: "🌸", label: "Mine?" },
-              ].map((q) => (
-                <div
-                  key={q.label}
-                  className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-blossom-200 bg-blossom-50/50 text-blossom-400 transition-colors hover:bg-blossom-50"
-                >
-                  <span className="text-2xl">{q.emoji}</span>
-                  <span className="mt-1 text-[0.7rem] font-medium text-blossom-500">{q.label}</span>
-                </div>
-              ))}
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              {homeMemories.length > 0
+                ? homeMemories.map((memory, idx) => (
+                    <div
+                      key={idx}
+                      className="group relative aspect-square overflow-hidden rounded-xl"
+                    >
+                      <img
+                        src={memory.dataUrl}
+                        alt={memory.caption || `Memory ${idx + 1}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </div>
+                  ))
+                : [0, 1, 2, 3].map((idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => memoryInputRef.current?.click()}
+                      className="flex aspect-square cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-blossom-200 bg-blossom-50/50 text-blossom-300 transition-colors hover:bg-blossom-50"
+                    >
+                      <Camera className="h-7 w-7" />
+                    </button>
+                  ))}
             </div>
           </BentoCard>
 

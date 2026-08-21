@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GameRouteImport } from './routes/game'
 import { Route as LettersRouteImport } from './routes/letters'
+import { Route as QuestionsRouteImport } from './routes/questions'
 import { Route as SurpriseRouteImport } from './routes/surprise'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const LettersRoute = LettersRouteImport.update({
   path: '/letters',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuestionsRoute = QuestionsRouteImport.update({
+  id: '/questions',
+  path: '/questions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SurpriseRoute = SurpriseRouteImport.update({
   id: '/surprise',
   path: '/surprise',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/game': typeof GameRoute
   '/letters': typeof LettersRoute
+  '/questions': typeof QuestionsRoute
   '/surprise': typeof SurpriseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/game': typeof GameRoute
   '/letters': typeof LettersRoute
+  '/questions': typeof QuestionsRoute
   '/surprise': typeof SurpriseRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/game': typeof GameRoute
   '/letters': typeof LettersRoute
+  '/questions': typeof QuestionsRoute
   '/surprise': typeof SurpriseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/game' | '/letters' | '/surprise'
+  fullPaths: '/' | '/game' | '/letters' | '/questions' | '/surprise'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/game' | '/letters' | '/surprise'
-  id: '__root__' | '/' | '/game' | '/letters' | '/surprise'
+  to: '/' | '/game' | '/letters' | '/questions' | '/surprise'
+  id: '__root__' | '/' | '/game' | '/letters' | '/questions' | '/surprise'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GameRoute: typeof GameRoute
   LettersRoute: typeof LettersRoute
+  QuestionsRoute: typeof QuestionsRoute
   SurpriseRoute: typeof SurpriseRoute
 }
 
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LettersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/questions': {
+      id: '/questions'
+      path: '/questions'
+      fullPath: '/questions'
+      preLoaderRoute: typeof QuestionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/surprise': {
       id: '/surprise'
       path: '/surprise'
@@ -106,8 +123,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GameRoute: GameRoute,
   LettersRoute: LettersRoute,
+  QuestionsRoute: QuestionsRoute,
   SurpriseRoute: SurpriseRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

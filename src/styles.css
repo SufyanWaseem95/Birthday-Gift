@@ -301,3 +301,34 @@
 @utility cupid-compliment {
   animation: cupid-compliment-in 2.5s ease-out forwards;
 }
+
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+.confetti-piece {
+  position: fixed;
+  z-index: 50;
+}
+
+@keyframes reaction-fade-in {
+  from { opacity: 0; transform: translateY(15px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@utility reaction-show {
+  animation: reaction-fade-in 0.4s ease-out forwards;
+}
+
+@utility yes-btn {
+  &:hover {
+    box-shadow: 0 0 20px oklch(0.58 0.19 350 / 0.4);
+  }
+}
+
+@utility no-btn {
+  &:hover {
+    border-color: oklch(0.58 0.19 350);
+  }
+}
