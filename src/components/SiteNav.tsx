@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, Images, Mail, Gamepad2, Gift } from "lucide-react";
+import { Heart, Mail, Gamepad2, Gift, Circle as HelpCircle } from "lucide-react";
 
 const links = [
   { to: "/", label: "Home", icon: Heart },
-  { to: "/memories", label: "Memories", icon: Images },
+  { to: "/questions", label: "Us", icon: HelpCircle },
   { to: "/letters", label: "Letters", icon: Mail },
   { to: "/surprise", label: "Surprise", icon: Gift },
   { to: "/game", label: "Love game", icon: Gamepad2 },

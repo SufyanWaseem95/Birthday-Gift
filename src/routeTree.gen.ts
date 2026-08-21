@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GameRouteImport } from './routes/game'
 import { Route as LettersRouteImport } from './routes/letters'
-import { Route as MemoriesRouteImport } from './routes/memories'
 import { Route as SurpriseRouteImport } from './routes/surprise'
 
 const IndexRoute = IndexRouteImport.update({
@@ -30,11 +29,6 @@ const LettersRoute = LettersRouteImport.update({
   path: '/letters',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MemoriesRoute = MemoriesRouteImport.update({
-  id: '/memories',
-  path: '/memories',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SurpriseRoute = SurpriseRouteImport.update({
   id: '/surprise',
   path: '/surprise',
@@ -45,14 +39,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/game': typeof GameRoute
   '/letters': typeof LettersRoute
-  '/memories': typeof MemoriesRoute
   '/surprise': typeof SurpriseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/game': typeof GameRoute
   '/letters': typeof LettersRoute
-  '/memories': typeof MemoriesRoute
   '/surprise': typeof SurpriseRoute
 }
 export interface FileRoutesById {
@@ -60,22 +52,20 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/game': typeof GameRoute
   '/letters': typeof LettersRoute
-  '/memories': typeof MemoriesRoute
   '/surprise': typeof SurpriseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/game' | '/letters' | '/memories' | '/surprise'
+  fullPaths: '/' | '/game' | '/letters' | '/surprise'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/game' | '/letters' | '/memories' | '/surprise'
-  id: '__root__' | '/' | '/game' | '/letters' | '/memories' | '/surprise'
+  to: '/' | '/game' | '/letters' | '/surprise'
+  id: '__root__' | '/' | '/game' | '/letters' | '/surprise'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GameRoute: typeof GameRoute
   LettersRoute: typeof LettersRoute
-  MemoriesRoute: typeof MemoriesRoute
   SurpriseRoute: typeof SurpriseRoute
 }
 
@@ -102,13 +92,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LettersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/memories': {
-      id: '/memories'
-      path: '/memories'
-      fullPath: '/memories'
-      preLoaderRoute: typeof MemoriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/surprise': {
       id: '/surprise'
       path: '/surprise'
@@ -123,19 +106,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GameRoute: GameRoute,
   LettersRoute: LettersRoute,
-  MemoriesRoute: MemoriesRoute,
   SurpriseRoute: SurpriseRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
